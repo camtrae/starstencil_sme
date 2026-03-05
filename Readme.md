@@ -88,17 +88,12 @@ clang -O3 -march=native+sme2 star3_stencil_neon.c -o star3_stencil_neon -lm
 
 **SVE streaming mode is consistently ~3x slower than NEON on Apple M4.**
 
-The root cause is not the algorithm or register utilization.
-The bottleneck is that Apple M4's SME streaming mode runs at a significantly reduced
-clock frequency compared to the normal NEON execution path.
-
 ```
 NEON x4  : 128-bit,  4 fp32/iter, native freq  → ~7500-8000 Mpix/s
 SVE load5: 512-bit, 16 fp32/iter, streaming    → ~2600-2900 Mpix/s
 ```
 
-SVE is 4× wider but runs at roughly 1/3 the speed — the frequency penalty (~4×)
-cancels out the width advantage entirely.
+SVE is 4× wider but runs at roughly 1/3 the speed.
 
 **Compiler auto-vectorization (V1) matches hand-written NEON (V3/V5).**
 
