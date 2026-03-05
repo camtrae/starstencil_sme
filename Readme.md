@@ -99,4 +99,3 @@ SVE is 4× wider but runs at roughly 1/3 the speed.
 
 Clang `-O3` generates NEON code that is essentially equivalent to hand-written V3/V5,
 confirmed by inspecting the assembly (`ldp q`, `fmla.4s`, `stp q` pattern).
-Manual intrinsics only help at small cache-resident sizes where blocking matters.
